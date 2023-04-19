@@ -1523,7 +1523,12 @@ window.sheetCell = {
         },
         "customWidth": {
             "2": 1
-        }
+        },
+        // "authority": {
+        //     isAlert: false,
+        //     formatCells: 0, //设置单元格格式
+        //     formatColumns: 1, //设置列格式
+        // },
     },
     "index": "0",
     "zoomRatio": 1,

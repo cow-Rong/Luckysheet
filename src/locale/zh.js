@@ -9115,6 +9115,7 @@ export default {
         moreOptions:"更多选项",
 
         cellFormat:"设置单元格格式",
+        columnFormat: "设置列格式",
         print:"打印",
     },
     alternatingColors:{
@@ -10245,6 +10246,22 @@ export default {
         tipsAll:"全部选中",
         selectionIsNullAlert:"请选择一个范围！",
         sheetDataIsNullAlert:"数据为空无法设置！",
+    },
+    columnFormat: {
+        columnFormatTitle: "设置列格式",
+        columnFormatType: "字段值类型",
+        FormatTypeDate: "日期",
+        FormatTypeTime: "时间",
+        FormatTypeText: "文本",
+        FormatTypeNumber: "数字",
+        protection: "保护",
+        locked: "锁定单元格",
+        hidden: "隐藏公式",
+        protectionTips: "只有保护工作表功能(在菜单栏点击保护工作表按钮进行设置)开启后，锁定单元格或隐藏公式才能生效",
+        tipsPart: "部分选中",
+        tipsAll: "全部选中",
+        selectionIsNullAlert: "请选择一个范围！",
+        sheetDataIsNullAlert: "数据为空无法设置！",
     },
     print:{
         normalBtn:"常规视图",
