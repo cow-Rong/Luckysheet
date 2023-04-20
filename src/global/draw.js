@@ -219,8 +219,9 @@ function luckysheetDrawgridRowTitle(scrollHeight, drawHeight, offsetTop) {
 }
 
 function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
-    // 在这里面画每列的类型比较合适，luckysheet-cols-menu-btn的点击弹框，把这个改成整个colunm的点击，或者文字的点击
+    // 在这里面画每列的类型比较合适，luckysheet-cols-menu-btn的点击弹框，把这个改成整个colunm的点击了，去掉了下面这个下拉菜单的html模版
     // <div class="luckysheet-cols-menu-btn luckysheet-mousedown-cancel" id="luckysheet-cols-menu-btn" style="display:block;"><i class="fa fa-caret-down luckysheet-mousedown-cancel" aria-hidden="true"></i></div>
+    // 每个column根据固定列头的的数字（比如固定两行）下一行（index=2，最少index=1,至少有一行作为表头）的值的类型确定列类型icon(四种：日期、时间、文字、数字)
     if (scrollWidth == null) {
         scrollWidth = $("#luckysheet-cell-main").scrollLeft();
     }
