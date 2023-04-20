@@ -394,6 +394,7 @@ export function rowColumnOperationInitial(){
             $("#luckysheet-cols-rows-add").show();
             $("#luckysheet-cols-rows-data").show();
             $("#luckysheet-cols-rows-shift").hide();
+            $("#luckysheet-cols-rows-columnformat").hide();
             $("#luckysheet-cols-rows-handleincell").hide();
 
             $$('#luckysheet-cols-rows-add .luckysheet-menuseparator').style.display = 'block';
@@ -496,9 +497,10 @@ export function rowColumnOperationInitial(){
         $("#luckysheet-rightclick-menu").hide();
         $("#luckysheet-sheet-list, #luckysheet-rightclick-sheet-menu").hide();
         $("#luckysheet-filter-menu, #luckysheet-filter-submenu").hide();
-
+        debugger
         //mousedown是右键
         if (event.which == "3") {
+            debugger
             let isright = false;
 
             for(let s = 0; s < Store.luckysheet_select_save.length; s++){
@@ -813,11 +815,12 @@ export function rowColumnOperationInitial(){
         $("#luckysheet-cols-menu-btn").hide();
         $("#luckysheet-cols-change-size").css("opacity", 0);
     }).mouseup(function (event) {
+        debugger
         if (event.which == 3) {
             if(isEditMode()){ //非编辑模式下禁止右键功能框
                 return;
             }
-
+            debugger
             Store.luckysheetRightHeadClickIs = "column";
             $("#luckysheet-rightclick-menu .luckysheet-cols-rows-shift-word").text(locale().rightclick.column);
             $("#luckysheet-rightclick-menu .luckysheet-cols-rows-shift-size").text(locale().rightclick.width);
@@ -827,6 +830,7 @@ export function rowColumnOperationInitial(){
             $("#luckysheet-cols-rows-add").show();
             $("#luckysheet-cols-rows-data").show();
             $("#luckysheet-cols-rows-shift").hide();
+            $("#luckysheet-cols-rows-columnformat").show();
             $("#luckysheet-cols-rows-handleincell").hide();
 
             $$('#luckysheet-cols-rows-add .luckysheet-menuseparator').style.display = 'block';
@@ -1006,6 +1010,7 @@ export function rowColumnOperationInitial(){
         $("#luckysheet-cols-rows-add").show();
         $("#luckysheet-cols-rows-data").hide();
         $("#luckysheet-cols-rows-shift").show();
+        $("#luckysheet-cols-rows-columnformat").show();
         $("#luckysheet-cols-rows-handleincell").hide();
 
         $$('#luckysheet-cols-rows-add .luckysheet-menuseparator').style.display = 'block';

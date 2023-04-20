@@ -103,7 +103,7 @@
 						image: false, // 插入图片
 						link: false, // 插入链接
 						data: false, // 数据验证
-						cellFormat: true, // 
+						cellFormat: false, // 
 						columnFormat: true //设置列格式
 					},
 					forceCalculation: false,
@@ -157,6 +157,9 @@
 						sheetMouseup: function (cell, postion, sheetFile, moveState, ctx) {
 							console.log(cell, postion, sheetFile, moveState, ctx);
 							console.log(moveState.columnTitleRightClick)
+						},
+						sheetRightclickColumnFormat: function (selection, postion, sheetFile, fmtType) {
+							console.log(selection, postion, sheetFile, fmtType);
 						},
 						cellAllRenderBefore: function (data, sheetFile, ctx) {
 							// console.info(data,sheetFile,ctx)

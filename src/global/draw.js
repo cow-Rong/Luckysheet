@@ -219,6 +219,8 @@ function luckysheetDrawgridRowTitle(scrollHeight, drawHeight, offsetTop) {
 }
 
 function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
+    // 在这里面画每列的类型比较合适，luckysheet-cols-menu-btn的点击弹框，把这个改成整个colunm的点击，或者文字的点击
+    // <div class="luckysheet-cols-menu-btn luckysheet-mousedown-cancel" id="luckysheet-cols-menu-btn" style="display:block;"><i class="fa fa-caret-down luckysheet-mousedown-cancel" aria-hidden="true"></i></div>
     if (scrollWidth == null) {
         scrollWidth = $("#luckysheet-cell-main").scrollLeft();
     }

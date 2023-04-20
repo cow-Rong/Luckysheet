@@ -79,7 +79,7 @@ const gridHTML = function () {
                                             <td valign="top" class="luckysheet-paneswrapper"> 
                                                 <div id="luckysheet-cols-h-c" class="luckysheet-cols-h-c">
                                                     <div class="luckysheet-cols-change-size" id="luckysheet-cols-change-size"></div>  
-                                                    <div class="luckysheet-cols-menu-btn luckysheet-mousedown-cancel" id="luckysheet-cols-menu-btn"><i class="fa fa-caret-down luckysheet-mousedown-cancel" aria-hidden="true"></i></div>  
+                                                     
                                                     <div class="luckysheet-cols-h-hover" id="luckysheet-cols-h-hover"></div>  
                                                     <div id="luckysheet-cols-h-selected"></div>  
                                                     <div class="luckysheet-grdusedrange"></div>  
@@ -276,7 +276,7 @@ function rightclickHTML() {
     // 当一个功能菜单块内所有的按钮都隐藏的时候，它顶部的分割线也需要隐藏掉
     let handleincellMenuseparator = true;
 
-    if (!config.insertRow && !config.insertColumn && !config.deleteRow && !config.deleteColumn && !config.deleteCell && !config.columnFormat) {
+    if (!config.insertRow && !config.insertColumn && !config.deleteRow && !config.deleteColumn && !config.deleteCell) {
         handleincellMenuseparator = false;
     }
 
@@ -318,11 +318,6 @@ function rightclickHTML() {
                     <div id="luckysheet-delCols" class="luckysheet-cols-menuitem luckysheet-cols-submenu luckysheet-mousedown-cancel" style="display:${config.deleteColumn ? 'block' : 'none'};">
                         <div class="luckysheet-cols-menuitem-content luckysheet-mousedown-cancel">
                         ${rightclick.deleteSelected}${rightclick.column}<span class="luckysheet-submenu-arrow" style="user-select: none;"></span>
-                        </div>
-                    </div>
-                    <div id="luckysheet-delCols" class="luckysheet-cols-menuitem luckysheet-cols-submenu luckysheet-mousedown-cancel"  style="display:${config.columnFormat ? 'block' : 'none'};">
-                        <div id="luckysheetColumnFormatRightClickMenu" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel" >
-                            <div class="luckysheet-cols-menuitem-content luckysheet-mousedown-cancel">${toolbar.columnFormat}</div>
                         </div>
                     </div>
                     <!-- cell right click remove hide button
@@ -385,6 +380,11 @@ function rightclickHTML() {
                         </div>
                     </div>
                 </div>
+                <div id="luckysheet-cols-rows-columnformat">
+                    <div id="luckysheetColumnFormatRightClickMenu" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel" >
+                        <div class="luckysheet-cols-menuitem-content luckysheet-mousedown-cancel">${toolbar.columnFormat}</div>
+                    </div>
+                </div>
                 <div id="luckysheet-cols-rows-shift">
                     <div class="luckysheet-menuseparator luckysheet-mousedown-cancel" role="separator" style="display:${config.sort ? 'block' : 'none'};"></div>
                     <div id="luckysheetorderbyasc" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel" style="display:${config.sort ? 'block' : 'none'};">
@@ -421,6 +421,9 @@ function rightclickHTML() {
                     </div>
                     <div id="luckysheetDataVerification" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel" style="display:${config.data ? 'block' : 'none'};">
                         <div class="luckysheet-cols-menuitem-content luckysheet-mousedown-cancel">${toolbar.dataVerification}</div>
+                    </div>
+                    <div id="luckysheetCellFormatRightClickMenu" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel" style="display:${config.cellFormat ? 'block' : 'none'};">
+                        <div class="luckysheet-cols-menuitem-content luckysheet-mousedown-cancel">${toolbar.cellFormat}</div>
                     </div>
                 </div>
             </div>
@@ -510,20 +513,6 @@ function rightclickHTML() {
                 <div id="luckysheet-delCols" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel">
                     <div class="luckysheet-cols-menuitem-content luckysheet-mousedown-cancel">
                         ${rightclick.deleteSelected}${rightclick.column}
-                    </div>
-                </div>
-            </div>
-            
-            -->
-
-            <!-- format row or column
-
-            <div id="luckysheetColsRowsHandleFormat_sub" class="luckysheet-cols-menu luckysheet-rightgclick-menu luckysheet-rightgclick-menu-sub luckysheet-mousedown-cancel">
-                <div id="luckysheet-formatRows" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel">
-                </div>
-                <div id="luckysheet-formatCols" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel">
-                    <div id="luckysheetColumnFormatRightClickMenu" class="luckysheet-cols-menuitem luckysheet-mousedown-cancel">
-                        <div class="luckysheet-cols-menuitem-content luckysheet-mousedown-cancel">${toolbar.columnFormat}</div>
                     </div>
                 </div>
             </div>
