@@ -4,7 +4,7 @@ import alternateformat from '../controllers/alternateformat';
 import luckysheetSparkline from '../controllers/sparkline';
 import menuButton from '../controllers/menuButton';
 import dataVerificationCtrl from '../controllers/dataVerificationCtrl';
-import { luckysheetdefaultstyle, luckysheet_CFiconsImg,luckysheetdefaultFont } from '../controllers/constant';
+import { luckysheetdefaultstyle, luckysheet_CFiconsImg, luckysheetdefaultFont, luckysheetIconFont } from '../controllers/constant';
 import { luckysheet_searcharray } from '../controllers/sheetSearch';
 import { dynamicArrayCompute } from './dynamicArray';
 import browser from './browser';
@@ -217,6 +217,71 @@ function luckysheetDrawgridRowTitle(scrollHeight, drawHeight, offsetTop) {
     luckysheetTableContent.restore();
     
 }
+// 画时钟图标
+function drawTimeClock(context, x, y, r) {
+    // 画圆
+    context.beginPath();
+    context.arc(x, y, r + 1, 0, 2 * Math.PI, false);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+
+    // 画分针
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(x + r, y - 1)
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+
+    // 画时针
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(x, y - r / 2 - 1)
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+}
+// 画日历图标
+function drawDateBook(context, x, y, width, height) {
+    // // 写31
+    // luckysheetTableContent.font = luckysheetIconFont();
+    // luckysheetTableContent.fillStyle = luckysheetdefaultstyle.rowFillStyle;
+    // context.fillText('31', x, y + height / 2);
+    // 画方框
+    context.beginPath();
+    context.moveTo(x, y);
+    context.rect(x, y, width, height);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+    // 画两竖线
+    context.beginPath();
+    context.moveTo(x + 3, y - 1);
+    context.lineTo(x + 3, y + 1);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+    context.beginPath();
+    context.moveTo(x + width - 3, y - 1);
+    context.lineTo(x + width - 3, y + 1);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+    // 画内容
+    context.beginPath();
+    context.moveTo(x + 2, y + height / 2 - 2);
+    context.lineTo(x + width - 2, y + height / 2 - 2);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+    context.beginPath();
+    context.moveTo(x + 2, y + height / 2 + 2);
+    context.lineTo(x + width - 3, y + height / 2 + 2);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+}
 
 function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
     // 在这里面画每列的类型比较合适，luckysheet-cols-menu-btn的点击弹框，把这个改成整个colunm的点击了，去掉了下面这个下拉菜单的html模版
@@ -284,7 +349,6 @@ function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
         //     break;
         // }
         let abc = chatatABC(c);
-        debugger
         // 画列数据类型icon，默认是text的A
         const data = Store.flowdata
         const scrollTop = $("#luckysheet-cell-main").scrollTop();
@@ -332,7 +396,20 @@ function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
             let verticalIconAlignPos = Math.round(Store.columnHeaderHeight / 2);
             
             luckysheetTableContent.fillText(abc, horizonAlignPos/Store.zoomRatio, verticalAlignPos/Store.zoomRatio);
-            luckysheetTableContent.fillText(icon, horizonIconAlignPos / Store.zoomRatio, verticalIconAlignPos / Store.zoomRatio);
+
+            const beginX = horizonIconAlignPos / Store.zoomRatio;
+            const beginY = verticalIconAlignPos / Store.zoomRatio;
+            const totalLen = icontMetrics.width;
+            const r = totalLen / 2;
+            if (icon === 'O') {
+                drawTimeClock(luckysheetTableContent, beginX + r - 2, beginY, r)
+            } else if (icon === '口') {
+                drawDateBook(luckysheetTableContent, beginX - 2, beginY - r, totalLen, verticalIconAlignPos)
+            } else {
+                luckysheetTableContent.font = luckysheetIconFont();
+                luckysheetTableContent.fillStyle = luckysheetdefaultstyle.rowFillStyle;
+                luckysheetTableContent.fillText(icon, beginX, beginY);
+            }
             luckysheetTableContent.restore();//restore scale after draw text
         }
 

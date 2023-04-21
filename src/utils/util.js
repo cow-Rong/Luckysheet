@@ -202,6 +202,9 @@ function ABCatNum(a) {
 //列类型图标  
 function chatatFormatIcon(cellData) {
     debugger
+    if (!cellData) {
+        return 'A';
+    }
     let fmt = cellData.ct || { fa: 'General', t: 'g' }
     const fa = fmt.fa
     const t = fmt.t
