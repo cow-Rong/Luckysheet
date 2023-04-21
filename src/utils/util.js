@@ -199,6 +199,31 @@ function ABCatNum(a) {
     return numout-1;
 };
 
+//列类型图标  
+function chatatFormatIcon(cellData) {
+    debugger
+    let fmt = cellData.ct || { fa: 'General', t: 'g' }
+    const fa = fmt.fa
+    const t = fmt.t
+    if (fa === 'General' || fa === '@' || t === 's' || t === 'g') {
+        return 'A'
+    }
+
+    if (t === 'n') {
+        return '%'
+    }
+
+    if (t === 'd') {
+        if (fa.indexOf('mm') !== -1) {
+            return 'O'
+        } else {
+            return '口'
+        }
+    }
+
+    return 'A'
+};
+
 //列下标  数字转字母
 function chatatABC(n) {
     // let wordlen = columeHeader_word.length;
@@ -881,6 +906,7 @@ export {
     hexToRgb,
     rgbTohex,
     ABCatNum,
+    chatatFormatIcon,
     chatatABC,
     ceateABC,
     createABCdim,

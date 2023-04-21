@@ -13,7 +13,7 @@ import { getMeasureText,getCellTextInfo } from './getRowlen';
 import { getRealCellValue } from './getdata';
 import { getBorderInfoComputeRange } from './border';
 import { getSheetIndex } from '../methods/get';
-import { getObjType, chatatABC, luckysheetfontformat } from '../utils/util';
+import { getObjType, chatatABC, luckysheetfontformat, chatatFormatIcon } from '../utils/util';
 import { isInlineStringCell } from '../controllers/inlineString';
 import method from './method';
 import Store from '../store';
@@ -284,6 +284,19 @@ function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
         //     break;
         // }
         let abc = chatatABC(c);
+        debugger
+        // 画列数据类型icon，默认是text的A
+        const data = Store.flowdata
+        const scrollTop = $("#luckysheet-cell-main").scrollTop();
+        const dataset_row_st = luckysheet_searcharray(Store.visibledatarow, scrollTop);
+        if (dataset_row_st == -1) {
+            dataset_row_st = 0;
+        }
+        const row_index = dataset_row_st; // 如果确定了固定头，从头的下一个算，如果没有，从index=1算
+        const cellData = data[row_index][c];
+        console.log(cellData)
+        let icon = chatatFormatIcon(cellData);
+
         //列标题单元格渲染前触发，return false 则不渲染该单元格
         if(!method.createHookFunction("columnTitleCellRenderBefore", abc, {
             c:c,
@@ -311,11 +324,15 @@ function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
             
             let textMetrics = getMeasureText(abc, luckysheetTableContent);
             //luckysheetTableContent.measureText(abc);
-
             let horizonAlignPos = Math.round((start_c + (end_c - start_c) / 2 + offsetLeft)  - textMetrics.width / 2);
             let verticalAlignPos = Math.round(Store.columnHeaderHeight / 2 );
+
+            let icontMetrics = getMeasureText(icon, luckysheetTableContent);
+            let horizonIconAlignPos = Math.round((start_c + (end_c - start_c) + offsetLeft) - icontMetrics.width - 4);
+            let verticalIconAlignPos = Math.round(Store.columnHeaderHeight / 2);
             
             luckysheetTableContent.fillText(abc, horizonAlignPos/Store.zoomRatio, verticalAlignPos/Store.zoomRatio);
+            luckysheetTableContent.fillText(icon, horizonIconAlignPos / Store.zoomRatio, verticalIconAlignPos / Store.zoomRatio);
             luckysheetTableContent.restore();//restore scale after draw text
         }
 
