@@ -351,14 +351,14 @@ function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
         let abc = chatatABC(c);
         // 画列数据类型icon，默认是text的A
         const data = Store.flowdata
-        const scrollTop = $("#luckysheet-cell-main").scrollTop();
-        const dataset_row_st = luckysheet_searcharray(Store.visibledatarow, scrollTop);
-        if (dataset_row_st == -1) {
-            dataset_row_st = 0;
+        let freezen_rowindex = 0
+        let currentSheet = Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)];
+        if (currentSheet.freezen != null && currentSheet.freezen.horizontal != null && currentSheet.freezen.horizontal.freezenhorizontaldata != null) {
+            console.log(currentSheet.freezen.horizontal);
+            freezen_rowindex = currentSheet.freezen.horizontal.freezenhorizontaldata[1];
         }
-        const row_index = dataset_row_st; // 如果确定了固定头，从头的下一个算，如果没有，从index=1算
-        const cellData = data[row_index][c];
-        console.log(cellData)
+        const row_index = freezen_rowindex; // 如果确定了固定头，从头的下一个算，如果没有，从index=1算
+        const cellData = data[row_index] ? data[row_index][c] : false;
         let icon = chatatFormatIcon(cellData);
 
         //列标题单元格渲染前触发，return false 则不渲染该单元格
@@ -402,7 +402,7 @@ function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
             const totalLen = icontMetrics.width;
             const r = totalLen / 2;
             if (icon === 'O') {
-                drawTimeClock(luckysheetTableContent, beginX + r - 2, beginY, r)
+                drawTimeClock(luckysheetTableContent, beginX + r - 2, beginY - 1, r)
             } else if (icon === '口') {
                 drawDateBook(luckysheetTableContent, beginX - 2, beginY - r, totalLen, verticalIconAlignPos)
             } else {

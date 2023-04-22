@@ -169,6 +169,11 @@
 							// console.info(operate)
 						},
 						cellUpdateBefore: function (r, c, value, isRefresh) {
+							console.log(r)
+							console.log(c)
+							console.log(value)
+							// 校验类型的时候要除去冻结头
+							// return false
 							// console.info('cellUpdateBefore',r,c,value,isRefresh)
 						},
 						cellUpdated: function (r, c, oldValue, newValue, isRefresh) {
