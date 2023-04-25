@@ -434,12 +434,12 @@ export function setSelectionFormat(attr, value, options = {}) {
     }
     let cfg = $.extend(true, {}, file.config);
 
-    let data = sheetFile.data;
+    let sheetFile = sheetmanage.getSheetByIndex(), data = sheetFile.data;
     if (data != null) {
-        for (let i = 0; i < Store.luckysheet_select_save.length; i++) {
-            let selection = Store.luckysheet_select_save[i];
+        // for (let i = 0; i < Store.luckysheet_select_save.length; i++) {
+        let selection = Store.luckysheet_select_save[0]
             let row = selection.row, column = selection.column;
-            for (let r = row[0]; r <= row[1]; r++) {
+        for (let r = row[0] + 1; r <= row[1]; r++) {
                 for (let c = column[0]; c <= column[1]; c++) {
                     let cell;
 
@@ -455,10 +455,10 @@ export function setSelectionFormat(attr, value, options = {}) {
                     }
 
                     cell[attr] = value;
-                    targetSheetData[row][column] = cell;
+                    targetSheetData[r][c] = cell;
                 }
             }
-        }
+        // }
     }
 
     // refresh
@@ -898,6 +898,7 @@ export function cancelFrozen(order) {
  * @param {Function} options.success 操作结束的回调函数
  */
 export function setHorizontalFrozen(isRange, options = {}) {
+    debugger
     let curSheetOrder = getSheetIndex(Store.currentSheetIndex);
     let {
         range,
