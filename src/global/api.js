@@ -413,68 +413,10 @@ export function setCellFormat(row, column, attr, value, options = {}) {
 
 // 批量设置选中区域的格式，没有做特殊格式的处理
 export function setSelectionFormat(attr, value, options = {}) {
-    if (!attr) {
-        return tooltip.info('Arguments attr cannot be null or undefined.', '')
-    }
-    let curSheetOrder = getSheetIndex(Store.currentSheetIndex);
-    let {
-        order = curSheetOrder,
-        success
-    } = { ...options };
-
-    let file = Store.luckysheetfile[order];
-
-    if (file == null) {
-        return tooltip.info("The order parameter is invalid.", "");
-    }
-
-    let targetSheetData = $.extend(true, [], file.data);
-    if (targetSheetData.length == 0) {
-        targetSheetData = sheetmanage.buildGridData(file);
-    }
-    let cfg = $.extend(true, {}, file.config);
-
-    let sheetFile = sheetmanage.getSheetByIndex(), data = sheetFile.data;
-    if (data != null) {
-        // for (let i = 0; i < Store.luckysheet_select_save.length; i++) {
-        let selection = Store.luckysheet_select_save[0]
-            let row = selection.row, column = selection.column;
-        for (let r = row[0] + 1; r <= row[1]; r++) {
-                for (let c = column[0]; c <= column[1]; c++) {
-                    let cell;
-
-                    let margeset = menuButton.mergeborer(data, r, c);
-                    if (!!margeset) {
-                        let row_index = margeset.row[2];
-                        let col_index = margeset.column[2];
-
-                        cell = data[row_index][col_index];
-                    }
-                    else {
-                        cell = data[r][c];
-                    }
-
-                    cell[attr] = value;
-                    targetSheetData[r][c] = cell;
-                }
-            }
-        // }
-    }
-
-    // refresh
-    if (file.index == Store.currentSheetIndex) {
-        file.config = cfg;
-        Store.config = cfg;
-        jfrefreshgrid(targetSheetData, Store.luckysheet_select_save);
-    }
-    else {
-        file.config = cfg;
-        file.data = targetSheetData;
-    }
-
-    if (success && typeof success === 'function') {
-        success(cellData);
-    }
+    let d = editor.deepCopyFlowData(Store.flowdata);//取数据   
+    d.shift();
+    // menuButton.updateFormat(d, "ct", "0.00%");
+    menuButton.updateFormat(d, attr, value.fa);
 }
 
 
@@ -2880,6 +2822,7 @@ export function setSingleRangeFormat(attr, value, options = {}) {
  * @param {Function} options.success 操作结束的回调函数
  */
 export function setRangeFormat(attr, value, options = {}) {
+    debugger
     let curSheetOrder = getSheetIndex(Store.currentSheetIndex);
     let curRange = Store.luckysheet_select_save;
     let {

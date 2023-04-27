@@ -629,7 +629,14 @@ function luckysheetextendtable(type, index, value, direction, sheetIndex) {
         //空行模板
         let row = [];
         for(let c = 0; c < d[0].length; c++){
-            row.push(null);
+            row.push({
+                v: '',
+                m: '',
+                ct: {
+                    fa: "General",
+                    t: "g"
+                },
+            });
         }
 
         //边框
@@ -781,7 +788,14 @@ function luckysheetextendtable(type, index, value, direction, sheetIndex) {
         //空列模板
         let col = [];
         for(let r = 0; r < d.length; r++){
-            col.push(null);
+            col.push({
+                v: '',
+                m: '',
+                ct: {
+                    fa: "General",
+                    t: "g"
+                },
+            });
         }
 
         //边框
