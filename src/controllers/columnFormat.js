@@ -6,14 +6,10 @@ import method from '../global/method';
 
 
 export function openColumnFormatModel() {
-    debugger
     // 这里直接对外弹框好了，讲选中的列弹出去，然后在外面做弹框view和setValue的列类型修改
     if (luckysheetConfigsetting && luckysheetConfigsetting.hook && luckysheetConfigsetting.hook.sheetRightclickColumnFormat) {
-        console.log('hook-columnFormatModal-进来了::>>')
+
         let file = sheetmanage.getSheetByIndex(), data = file.data;
-        console.log(Store.luckysheet_select_save)
-        console.log(Store.flowdata)
-        console.log(data)
         const selection = Store.luckysheet_select_save[0];
         const start_c = selection.column[0];
         let targetSheetData = $.extend(true, [], file.data);

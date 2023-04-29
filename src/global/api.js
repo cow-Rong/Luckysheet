@@ -413,10 +413,21 @@ export function setCellFormat(row, column, attr, value, options = {}) {
 
 // 批量设置选中区域的格式，没有做特殊格式的处理
 export function setSelectionFormat(attr, value, options = {}) {
-    let d = editor.deepCopyFlowData(Store.flowdata);//取数据   
-    d.shift();
-    // menuButton.updateFormat(d, "ct", "0.00%");
-    menuButton.updateFormat(d, attr, value.fa);
+    let selectv = Store.luckysheet_select_save[0];
+    let v = {
+        ...selectv,
+        row: [1, selectv.row[1]],
+        row_focus: 1,
+        top: 1,
+        top_move: 1,
+        width: selectv.width,
+        width_move: selectv.width_move
+    }
+    Store.luckysheet_select_save = [v];
+    // Store.flowdata.shift()
+    const contentData = Store.flowdata.slice(1)
+    let d = editor.deepCopyFlowData(contentData);//取数据   
+    menuButton.updateFormatCT(d, attr, value);
 }
 
 
@@ -840,7 +851,6 @@ export function cancelFrozen(order) {
  * @param {Function} options.success 操作结束的回调函数
  */
 export function setHorizontalFrozen(isRange, options = {}) {
-    debugger
     let curSheetOrder = getSheetIndex(Store.currentSheetIndex);
     let {
         range,
@@ -2822,7 +2832,6 @@ export function setSingleRangeFormat(attr, value, options = {}) {
  * @param {Function} options.success 操作结束的回调函数
  */
 export function setRangeFormat(attr, value, options = {}) {
-    debugger
     let curSheetOrder = getSheetIndex(Store.currentSheetIndex);
     let curRange = Store.luckysheet_select_save;
     let {

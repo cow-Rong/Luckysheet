@@ -1127,7 +1127,6 @@ export default function luckysheetHandler() {
 
     }).mouseup(function (event) {
         if (event.which == "3") {
-            debugger
             //禁止前台编辑(只可 框选单元格、滚动查看表格)
             if (!Store.allowEdit) {
                 return;
@@ -1151,14 +1150,14 @@ export default function luckysheetHandler() {
 
             $$('#luckysheet-cols-rows-data .luckysheet-menuseparator').style.display = 'block';
             $$('#luckysheet-cols-rows-handleincell .luckysheet-menuseparator').style.display = 'block';
-            debugger
+
             if (obj_s["row"] != null && obj_s["row"][0] == 0 && obj_s["row"][1] == Store.flowdata.length - 1) {
 
                 // 如果全部按钮都隐藏，则整个菜单容器也要隐藏
                 if (!cellRightClickConfig.copy && !cellRightClickConfig.copyAs && !cellRightClickConfig.paste && !cellRightClickConfig.insertColumn && !cellRightClickConfig.deleteColumn && !cellRightClickConfig.hideColumn && !cellRightClickConfig.columnWidth && !cellRightClickConfig.clear && !cellRightClickConfig.matrix && !cellRightClickConfig.sort && !cellRightClickConfig.filter && !cellRightClickConfig.chart && !cellRightClickConfig.image && !cellRightClickConfig.link && !cellRightClickConfig.data && !cellRightClickConfig.cellFormat && !cellRightClickConfig.colunmFormat) {
                     return;
                 }
-                debugger
+
                 Store.luckysheetRightHeadClickIs = "column";
 
                 $("#luckysheet-rightclick-menu .luckysheet-cols-rows-shift-word").text(locale().rightclick.column);
@@ -1303,7 +1302,7 @@ export default function luckysheetHandler() {
                     $("#luckysheet-cols-rows-add").find("input[type='number'].rcsize").val("");
                 }
             }else{
-                debugger
+
                 // 单元格点击暂时不出菜单
                 return;
                 // 如果全部按钮都隐藏，则整个菜单容器也要隐藏

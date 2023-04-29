@@ -208,20 +208,21 @@ function chatatFormatIcon(cellData) {
     let fmt = cellData.ct || { fa: 'General', t: 'g' }
     const fa = fmt.fa
     const t = fmt.t
-    if (fa === 'General' || fa === '@' || t === 's' || t === 'g') {
+    const p = fmt.p
+    if (p === 's') {
         return 'A'
     }
 
-    if (t === 'n') {
-        return '%'
+    if (p === 't') {
+        return 'O'
     }
 
-    if (t === 'd') {
-        if (fa.indexOf('mm') !== -1) {
-            return 'O'
-        } else {
-            return '口'
-        }
+    if (p === 'd') {
+        return '口'
+    }
+
+    if (p === 'n') {
+        return '%'
     }
 
     return 'A'
