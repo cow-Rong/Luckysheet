@@ -2089,7 +2089,6 @@ body:not(.ewa-ipad) .luckysheet-rows-h-cell-sel:hover {
 }
 
 .luckysheet-cs-draghandle {
-    display: none;
     position: absolute;
     cursor: move;
     background-color: #fff;
@@ -4675,6 +4674,7 @@ fieldset[disabled] .btn-danger.focus {
 /*冻结窗口样式*/
 .luckysheet-freezebar-handle,
 .luckysheet-freezebar-drop {
+    display: none;
     position: absolute;
     z-index: 999;
 }
