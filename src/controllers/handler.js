@@ -37,6 +37,7 @@ import {
     checkProtectionAuthorityNormal,
 } from "./protection";
 import { openCellFormatModel } from "./cellFormat";
+import { openColumnFormatModel } from './columnFormat';
 
 import {
     replaceHtml,
@@ -1253,7 +1254,7 @@ export default function luckysheetHandler() {
 
                 $("#luckysheet-cols-rows-data").show();
                 $("#luckysheet-cols-rows-handleincell").show();
-                $("#luckysheet-cols-rows-add, #luckysheet-cols-rows-shift").hide();
+                $("#luckysheet-cols-rows-add, #luckysheet-cols-rows-shift,#luckysheet-cols-rows-columnformat").hide();
 
                 $$("#luckysheet-cols-rows-data .luckysheet-menuseparator").style.display = "block";
                 $$("#luckysheet-cols-rows-handleincell .luckysheet-menuseparator").style.display = "block";
@@ -1276,7 +1277,8 @@ export default function luckysheetHandler() {
                         !cellRightClickConfig.image &&
                         !cellRightClickConfig.link &&
                         !cellRightClickConfig.data &&
-                        !cellRightClickConfig.cellFormat
+                        !cellRightClickConfig.cellFormat &&
+                        !cellRightClickConfig.columnFormat
                     ) {
                         return;
                     }
@@ -1291,6 +1293,7 @@ export default function luckysheetHandler() {
                     $("#luckysheet-cols-rows-add").show();
                     // $("#luckysheet-cols-rows-data").show();
                     $("#luckysheet-cols-rows-shift").hide();
+                    $("#luckysheet-cols-rows-columnformat").show();
                     $("#luckysheet-cols-rows-handleincell").hide();
                     Store.luckysheet_cols_menu_status = true;
 
@@ -1392,7 +1395,8 @@ export default function luckysheetHandler() {
                         !cellRightClickConfig.image &&
                         !cellRightClickConfig.link &&
                         !cellRightClickConfig.data &&
-                        !cellRightClickConfig.cellFormat
+                        !cellRightClickConfig.cellFormat &&
+                        !cellRightClickConfig.colunmFormat
                     ) {
                         return;
                     }
@@ -1406,6 +1410,7 @@ export default function luckysheetHandler() {
                     $("#luckysheet-cols-rows-add").show();
                     // $("#luckysheet-cols-rows-data").show();
                     $("#luckysheet-cols-rows-shift").hide();
+                    $("#luckysheet-cols-rows-columnformat").hide();
                     $("#luckysheet-cols-rows-handleincell").hide();
                     Store.luckysheet_cols_menu_status = true;
 
@@ -1504,7 +1509,8 @@ export default function luckysheetHandler() {
                         !cellRightClickConfig.image &&
                         !cellRightClickConfig.link &&
                         !cellRightClickConfig.data &&
-                        !cellRightClickConfig.cellFormat
+                        !cellRightClickConfig.cellFormat &&
+                        !cellRightClickConfig.colunmFormat
                     ) {
                         return;
                     }
@@ -1545,7 +1551,8 @@ export default function luckysheetHandler() {
                     !cellRightClickConfig.image &&
                     !cellRightClickConfig.link &&
                     !cellRightClickConfig.data &&
-                    !cellRightClickConfig.cellFormat
+                    !cellRightClickConfig.cellFormat &&
+                    !cellRightClickConfig.colunmFormat
                 ) {
                     $$("#luckysheet-cols-rows-data .luckysheet-menuseparator").style.display = "none";
                 }
@@ -5549,6 +5556,11 @@ export default function luckysheetHandler() {
     //Cell format
     $("#luckysheetCellFormatRightClickMenu").click(function() {
         openCellFormatModel();
+    });
+
+    //Column format
+    $("#luckysheetColumnFormatRightClickMenu").click(function () {
+        openColumnFormatModel();
     });
 
     //冻结行列

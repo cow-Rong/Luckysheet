@@ -211,6 +211,36 @@ function ABCatNum(a) {
     return numout - 1;
 }
 
+//列类型图标  
+function chatatFormatIcon(cellData) {
+    if (!cellData) {
+        return 'A';
+    }
+
+    let fmt = cellData.ct || { fa: 'General', t: 'g' }
+    const fa = fmt.fa
+    const t = fmt.t
+    const p = fmt.p
+    if (p === 's') {
+        return 'A'
+    }
+
+    if (p === 't') {
+        return 'O'
+    }
+
+    if (p === 'd') {
+        return '口'
+    }
+
+    if (p === 'n') {
+        return '%'
+    }
+
+    return 'A'
+}
+
+
 //列下标  数字转字母
 function chatatABC(n) {
     // let wordlen = columeHeader_word.length;
@@ -896,6 +926,7 @@ export {
     hexToRgb,
     rgbTohex,
     ABCatNum,
+    chatatFormatIcon,
     chatatABC,
     ceateABC,
     createABCdim,

@@ -2089,6 +2089,7 @@ body:not(.ewa-ipad) .luckysheet-rows-h-cell-sel:hover {
 }
 
 .luckysheet-cs-draghandle {
+    display: none;
     position: absolute;
     cursor: move;
     background-color: #fff;

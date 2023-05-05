@@ -436,6 +436,26 @@ export function setCellFormat(row, column, attr, value, options = {}) {
     }
 }
 
+// 批量设置选中区域的格式，没有做特殊格式的处理
+export function setSelectionFormat(attr, value, options = {}) {
+    let selectv = Store.luckysheet_select_save[0];
+    let v = {
+        ...selectv,
+        row: [1, selectv.row[1]],
+        row_focus: 1,
+        top: 1,
+        top_move: 1,
+        width: selectv.width,
+        width_move: selectv.width_move
+    }
+    Store.luckysheet_select_save = [v];
+    // Store.flowdata.shift()
+    const contentData = Store.flowdata.slice(1)
+    let d = editor.deepCopyFlowData(contentData);//取数据   
+    menuButton.updateFormatCT(d, attr, value);
+}
+
+
 /**
  * 查找一个工作表中的指定内容，返回查找到的内容组成的单元格一位数组，数据格式同celldata
  * @param {String} content 要查找的内容 可以为正则表达式（不包含前后'/')

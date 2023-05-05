@@ -4,7 +4,7 @@ import alternateformat from '../controllers/alternateformat';
 import luckysheetSparkline from '../controllers/sparkline';
 import menuButton from '../controllers/menuButton';
 import dataVerificationCtrl from '../controllers/dataVerificationCtrl';
-import { luckysheetdefaultstyle, luckysheet_CFiconsImg,luckysheetdefaultFont } from '../controllers/constant';
+import { luckysheetdefaultstyle, luckysheet_CFiconsImg, luckysheetdefaultFont, luckysheetIconFont } from '../controllers/constant';
 import { luckysheet_searcharray } from '../controllers/sheetSearch';
 import { dynamicArrayCompute } from './dynamicArray';
 import browser from './browser';
@@ -13,7 +13,7 @@ import { getMeasureText,getCellTextInfo } from './getRowlen';
 import { getRealCellValue } from './getdata';
 import { getBorderInfoComputeRange } from './border';
 import { getSheetIndex } from '../methods/get';
-import { getObjType, chatatABC, luckysheetfontformat } from '../utils/util';
+import { getObjType, chatatABC, luckysheetfontformat, chatatFormatIcon } from '../utils/util';
 import { isInlineStringCell } from '../controllers/inlineString';
 import method from './method';
 import Store from '../store';
@@ -218,6 +218,72 @@ function luckysheetDrawgridRowTitle(scrollHeight, drawHeight, offsetTop) {
     
 }
 
+// 画时钟图标
+function drawTimeClock(context, x, y, r) {
+    // 画圆
+    context.beginPath();
+    context.arc(x, y, r + 1, 0, 2 * Math.PI, false);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+
+    // 画分针
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(x + r, y - 1)
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+
+    // 画时针
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(x, y - r / 2 - 1)
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+}
+// 画日历图标
+function drawDateBook(context, x, y, width, height) {
+    // // 写31
+    // luckysheetTableContent.font = luckysheetIconFont();
+    // luckysheetTableContent.fillStyle = luckysheetdefaultstyle.rowFillStyle;
+    // context.fillText('31', x, y + height / 2);
+    // 画方框
+    context.beginPath();
+    context.moveTo(x, y);
+    context.rect(x, y, width, height);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+    // 画两竖线
+    context.beginPath();
+    context.moveTo(x + 3, y - 1);
+    context.lineTo(x + 3, y + 1);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+    context.beginPath();
+    context.moveTo(x + width - 3, y - 1);
+    context.lineTo(x + width - 3, y + 1);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+    // 画内容
+    context.beginPath();
+    context.moveTo(x + 2, y + height / 2 - 2);
+    context.lineTo(x + width - 2, y + height / 2 - 2);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+    context.beginPath();
+    context.moveTo(x + 2, y + height / 2 + 2);
+    context.lineTo(x + width - 3, y + height / 2 + 2);
+    context.strokeStyle = luckysheetdefaultstyle.rowFillStyle;
+    context.closePath();
+    context.stroke();
+}
+
 function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
     if (scrollWidth == null) {
         scrollWidth = $("#luckysheet-cell-main").scrollLeft();
@@ -281,6 +347,16 @@ function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
         //     break;
         // }
         let abc = chatatABC(c);
+        // 画列数据类型icon，默认是text的A
+        const data = Store.flowdata
+        let freezen_rowindex = 0
+        let currentSheet = Store.luckysheetfile[getSheetIndex(Store.currentSheetIndex)];
+        if (currentSheet.freezen != null && currentSheet.freezen.horizontal != null && currentSheet.freezen.horizontal.freezenhorizontaldata != null) {
+            freezen_rowindex = currentSheet.freezen.horizontal.freezenhorizontaldata[1];
+        }
+        const row_index = freezen_rowindex; // 如果确定了固定头，从头的下一个算，如果没有，从index=1算
+        const cellData = data[row_index] ? data[row_index][c] : false;
+        let icon = chatatFormatIcon(cellData);
         //列标题单元格渲染前触发，return false 则不渲染该单元格
         if(!method.createHookFunction("columnTitleCellRenderBefore", abc, {
             c:c,
@@ -311,8 +387,26 @@ function luckysheetDrawgridColumnTitle(scrollWidth, drawWidth, offsetLeft) {
 
             let horizonAlignPos = Math.round((start_c + (end_c - start_c) / 2 + offsetLeft)  - textMetrics.width / 2);
             let verticalAlignPos = Math.round(Store.columnHeaderHeight / 2 );
+
+            let icontMetrics = getMeasureText(icon, luckysheetTableContent);
+            let horizonIconAlignPos = Math.round((start_c + (end_c - start_c) + offsetLeft) - icontMetrics.width - 4);
+            let verticalIconAlignPos = Math.round(Store.columnHeaderHeight / 2);
             
             luckysheetTableContent.fillText(abc, horizonAlignPos/Store.zoomRatio, verticalAlignPos/Store.zoomRatio);
+
+            const beginX = horizonIconAlignPos / Store.zoomRatio;
+            const beginY = verticalIconAlignPos / Store.zoomRatio;
+            const totalLen = icontMetrics.width;
+            const r = totalLen / 2;
+            if (icon === 'O') {
+                drawTimeClock(luckysheetTableContent, beginX + r - 2, beginY - 1, r)
+            } else if (icon === '口') {
+                drawDateBook(luckysheetTableContent, beginX - 2, beginY - r, totalLen, verticalIconAlignPos)
+            } else {
+                luckysheetTableContent.font = luckysheetIconFont();
+                luckysheetTableContent.fillStyle = luckysheetdefaultstyle.rowFillStyle;
+                luckysheetTableContent.fillText(icon, beginX, beginY);
+            }
             luckysheetTableContent.restore();//restore scale after draw text
         }
 

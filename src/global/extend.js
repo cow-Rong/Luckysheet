@@ -10,6 +10,7 @@ import { luckysheet_searcharray } from "../controllers/sheetSearch";
 import { checkProtectionAuthorityNormal, checkProtectionNotEnable } from "../controllers/protection";
 import { getSheetIndex } from "../methods/get";
 import Store from "../store";
+import method from "../global/method"
 
 /**
  * 增加行列
@@ -21,6 +22,7 @@ import Store from "../store";
  * @returns
  */
 function luckysheetextendtable(type, index, value, direction, sheetIndex) {
+
     sheetIndex = sheetIndex ?? Store.currentSheetIndex;
 
     if (type == "row" && !checkProtectionAuthorityNormal(sheetIndex, "insertRows")) {
@@ -581,7 +583,15 @@ function luckysheetextendtable(type, index, value, direction, sheetIndex) {
         // *添加空行模板这里请保持为push null;
         let row = [];
         for (let c = 0; c < d[0].length; c++) {
-            row.push(null);
+            // row.push(null);
+            row.push({
+                v: null,
+                m: '',
+                ct: {
+                    fa: "General",
+                    t: "g"
+                },
+            });
         }
 
         var cellBorderConfig = [];
@@ -738,7 +748,15 @@ function luckysheetextendtable(type, index, value, direction, sheetIndex) {
         // *添加空列模板这里请保持为push null;
         let col = [];
         for (let r = 0; r < d.length; r++) {
-            col.push(null);
+            // col.push(null);
+            col.push({
+                v: null,
+                m: '',
+                ct: {
+                    fa: "General",
+                    t: "g"
+                },
+            });
         }
 
         var cellBorderConfig = [];
@@ -919,6 +937,8 @@ function luckysheetextendtable(type, index, value, direction, sheetIndex) {
             $("#luckysheet-column-count-show").hide();
         }
     }
+
+    method.createHookFunction("sheetExtendColumnRow", type, index, value, direction);
 }
 
 function luckysheetextendData(rowlen, newData) {
@@ -1723,6 +1743,8 @@ function luckysheetdeletetable(type, st, ed, sheetIndex) {
         file.dataVerification = newDataVerification;
         file.hyperlink = newHyperlink;
     }
+
+    method.createHookFunction("sheetDeleteColumnRow", type, st, ed);
 }
 
 //删除单元格

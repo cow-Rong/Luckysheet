@@ -139,6 +139,20 @@
 						sheetMouseup: function (cell, postion, sheetFile, moveState, ctx) {
 							// console.log(cell,postion,sheetFile,moveState,ctx);
 						},
+						sheetRightclickColumnFormat: function (selection, postion, sheetFile, fmtType) {
+							// console.log(selection, postion, sheetFile, fmtType);
+						},
+						/* 增加行列
+						 * @param {string} type 行或列 ['row', 'column'] 之一
+						 * @param {number} index 插入的位置 index
+						 * @param {number} value 插入 多少 行（列）
+						 * @param {string} direction 哪个方向插入 ['lefttop','rightbottom'] 之一 */
+						sheetExtendColumnRow: function (type, index, value, direction) {
+							console.log(type, index, value, direction);
+						},
+						sheetDeleteColumnRow: function (type, st, ed) {
+							console.log(type, st, ed);
+						},
 						cellAllRenderBefore: function (data, sheetFile, ctx) {
 							// console.info(data,sheetFile,ctx)
 						},

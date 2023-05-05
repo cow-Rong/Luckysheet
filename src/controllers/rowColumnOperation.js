@@ -449,6 +449,7 @@ export function rowColumnOperationInitial() {
                 $("#luckysheet-cols-rows-add").show();
                 $("#luckysheet-cols-rows-data").show();
                 $("#luckysheet-cols-rows-shift").hide();
+                $("#luckysheet-cols-rows-columnformat").hide();
                 $("#luckysheet-cols-rows-handleincell").hide();
 
                 $$("#luckysheet-cols-rows-add .luckysheet-menuseparator").style.display = "block";
@@ -993,6 +994,7 @@ export function rowColumnOperationInitial() {
                 $("#luckysheet-cols-rows-add").show();
                 $("#luckysheet-cols-rows-data").show();
                 $("#luckysheet-cols-rows-shift").hide();
+                $("#luckysheet-cols-rows-columnformat").show();
                 $("#luckysheet-cols-rows-handleincell").hide();
 
                 $$("#luckysheet-cols-rows-add .luckysheet-menuseparator").style.display = "block";
@@ -1244,6 +1246,7 @@ export function rowColumnOperationInitial() {
         $("#luckysheet-cols-rows-add").show();
         $("#luckysheet-cols-rows-data").hide();
         $("#luckysheet-cols-rows-shift").show();
+        $("#luckysheet-cols-rows-columnformat").show();
         $("#luckysheet-cols-rows-handleincell").hide();
 
         $$("#luckysheet-cols-rows-add .luckysheet-menuseparator").style.display = "block";

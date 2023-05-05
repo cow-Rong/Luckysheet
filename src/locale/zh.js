@@ -5852,6 +5852,7 @@ export default {
         moreOptions:"更多选项",
 
         cellFormat:"设置单元格格式",
+        columnFormat: "设置列格式",
         print:"打印",
     },
     alternatingColors:{

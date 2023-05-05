@@ -3222,6 +3222,114 @@ const menuButton = {
 
         jfrefreshgrid(d, Store.luckysheet_select_save, allParam, false);
     },
+    updateFormatCellCT: function (d, attr, ctObj, row_st, row_ed, col_st, col_ed) {
+        let foucsStatus = ctObj.fa;
+        let p = ctObj.p || 's';
+        if (d == null || attr == null) {
+            return;
+        }
+        if (attr == "ct") {
+            for (let r = row_st; r <= row_ed; r++) {
+                if (Store.config["rowhidden"] != null && Store.config["rowhidden"][r] != null) {
+                    continue;
+                }
+
+                for (let c = col_st; c <= col_ed; c++) {
+                    let cell = d[r][c], value = null;
+
+                    if (getObjType(cell) == "object") {
+                        value = d[r][c]["v"];
+                    }
+                    else {
+                        value = d[r][c];
+                    }
+
+                    if (foucsStatus != "@" && isRealNum(value)) {
+                        value = parseFloat(value);
+                    }
+
+                    let mask = update(foucsStatus, value);
+                    let type = "n";
+
+                    if (is_date(foucsStatus) || foucsStatus === 14 || foucsStatus === 15 || foucsStatus === 16 || foucsStatus === 17 || foucsStatus === 18 || foucsStatus === 19 || foucsStatus === 20 || foucsStatus === 21 || foucsStatus === 22 || foucsStatus === 45 || foucsStatus === 46 || foucsStatus === 47) {
+                        type = "d";
+                    }
+                    else if (foucsStatus == "@" || foucsStatus === 49) {
+                        type = "s"
+                    }
+                    else if (foucsStatus == "General" || foucsStatus === 0) {
+                        type = "g";
+                    }
+
+                    if (getObjType(cell) == "object") {
+                        d[r][c]["m"] = mask;
+                        if (d[r][c]["ct"] == null) {
+                            d[r][c]["ct"] = {};
+                        }
+                        d[r][c]["ct"]["fa"] = foucsStatus;
+                        d[r][c]["ct"]["t"] = type;
+                        d[r][c]["ct"]["p"] = p;
+                    }
+                    else {
+                        d[r][c] = { "ct": { "fa": foucsStatus, "t": type, "p": p }, "v": value, "m": mask };
+                    }
+                }
+            }
+        }
+    },
+    updateFormatCT: function (d, attr, ctObj) {
+        let _this = this;
+
+        if (!checkProtectionFormatCells(Store.currentSheetIndex)) {
+            return;
+        }
+
+        if (Store.allowEdit === false) {
+            return;
+        }
+
+        let canvasElement = document.createElement('canvas');
+        let canvas = canvasElement.getContext("2d");
+
+        // if (attr in inlineStyleAffectAttribute) {
+        //     if (parseInt($("#luckysheet-input-box").css("top")) > 0) {
+        //         let value = $("#luckysheet-input-box").text();
+        //         if (value.substr(0, 1) != "=") {
+        //             let cell = d[Store.luckysheetCellUpdate[0]][Store.luckysheetCellUpdate[1]];
+        //             updateInlineStringFormat(cell, attr, foucsStatus, luckysheetformula.rangeResizeTo);
+        //             // return;
+        //         }
+        //     }
+        // }
+
+        let cfg = $.extend(true, {}, Store.config);
+        if (cfg["rowlen"] == null) {
+            cfg["rowlen"] = {};
+        }
+
+        for (let s = 0; s < Store.luckysheet_select_save.length; s++) {
+            let row_st = Store.luckysheet_select_save[s]["row"][0],
+                row_ed = Store.luckysheet_select_save[s]["row"][1];
+            let col_st = Store.luckysheet_select_save[s]["column"][0],
+                col_ed = Store.luckysheet_select_save[s]["column"][1];
+
+            this.updateFormatCellCT(d, attr, ctObj, row_st, row_ed, col_st, col_ed);
+
+            // if (attr == "tb" || attr == "tr" || attr == "fs") {
+            //     cfg = rowlenByRange(d, row_st, row_ed, cfg);
+            // }
+        }
+
+        let allParam = {};
+        // if (attr == "tb" || attr == "tr" || attr == "fs") {
+        //     allParam = {
+        //         "cfg": cfg,
+        //         "RowlChange": true
+        //     }
+        // }
+
+        jfrefreshgrid(d, Store.luckysheet_select_save, allParam, false);
+    },
     updateFormat_mc: function(d, foucsStatus){
         // *如果禁止前台编辑，则中止下一步操作
         if (!checkIsAllowEdit()) {
