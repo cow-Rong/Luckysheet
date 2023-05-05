@@ -2076,6 +2076,7 @@ body:not(.ewa-ipad) .luckysheet-rows-h-cell-sel:hover {
 }
 
 .luckysheet-cs-fillhandle {
+    display: none !important;
     position: absolute;
     width: 6px;
     height: 6px;

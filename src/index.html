@@ -157,10 +157,11 @@
 							// console.info(data,sheetFile,ctx)
 						},
 						updated: function (operate) {
-							// console.info(operate)
+							console.info(operate)
 						},
 						cellUpdateBefore: function (r, c, value, isRefresh) {
 							// console.info('cellUpdateBefore',r,c,value,isRefresh)
+							return false
 						},
 						cellUpdated: function (r, c, oldValue, newValue, isRefresh) {
 							// console.info('cellUpdated',r,c,oldValue, newValue, isRefresh)
